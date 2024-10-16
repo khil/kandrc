@@ -12,18 +12,18 @@ int main() {
 	while((c = getchar()) != EOF) {
 		if (c == '\t') {
 			printf("\\t");
-			c = 0;
+			c = EOF;
 		}
 		if (c == '\b') {
 			printf("\\b");
-			c = 0;
+			c = EOF;
 		}
 		if (c == '\\') {
 			printf("\\\\");
-			c = 0;
+			c = EOF;
 		}
 		
-		if (c != 0)
+		if (c != EOF)
 			putchar(c);
 	}
 }
