@@ -7,7 +7,7 @@
 
 int main() {
 	float celsius;
-    printf("Celius Farh\n------ ----\n");
+    printf("Celsius Farh\n------- ----\n");
     for (celsius = 300.0; celsius >= 0; celsius = celsius - 30) {
         printf("%6.0f %4.0f\n", celsius, ((celsius * 9.0/5.0) + 32.0));
     }
