@@ -38,11 +38,9 @@ int _getline(char line[], int maxline) {
 
 		return i;
 	}
-	else {
-		if (c == EOF)
-			return EOF;
-		else
-			return 0;
-	}
+	else if (c == EOF)
+		return EOF;
+	else
+		return 0;
 }
 
