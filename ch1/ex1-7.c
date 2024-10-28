@@ -5,5 +5,5 @@
 */
 
 int main() {
-	printf("EFO value =  %d\n", EOF);
+	printf("EOF value =  %d\n", EOF);
 }

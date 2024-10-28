@@ -9,6 +9,8 @@
 #define MAXLINE 1000
 
 int _getline(char line[], int maxline);
+int _putline(char line[], int len);
+
 
 int main() {
 	int len, i;
@@ -16,9 +18,7 @@ int main() {
 
 	while ((len = _getline(line, MAXLINE)) > 0) {
 		printf("len=%03d: ", len);
-		for (i = 0; i <= len && line[i] != '\0'; i++) {
-			putchar(line[i]);
-		}
+		_putline(line, len);
 	}
 
 	return 0;
@@ -41,3 +41,13 @@ int _getline(char line[], int maxline) {
 	return i;
 }
 
+
+int _putline(char line[], int len) {
+	int i;
+	
+	for (i = 0; i <= len && line[i] != '\0'; i++) {
+		putchar(line[i]);
+	}
+
+	return i;
+}
