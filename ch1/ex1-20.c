@@ -18,8 +18,7 @@ int main() {
 	int len, o_len;
 	char line[MAXLINE];
 
-	while ((len = _getline(line, MAXLINE)) != EOF) {
-		printf("before-%3d: %s", len, line);
+	while ((len = _getline(line, MAXLINE)) > 0) {
 		o_len = len;
 		if (len > 0)
 			len = detab(line, len, MAXLINE);
@@ -27,7 +26,7 @@ int main() {
 		if (len == ERROR)
 			printf("ERROR: insufficient array space!");
 		else {
-			printf(" after-%3d: %s\t%d tabs replaced!\n", len, line, (len - o_len) / (TAB_WIDTH - 1));
+			printf("%s", line);
 
 		}
 	}
@@ -66,19 +65,9 @@ int _getline(char line[], int maxline) {
 	for (i = 0; i < maxline - 1 && (c = getchar()) != EOF && c != '\n'; i++)
 		line[i] = c;
 
-	if (i > 0) {
-		for (; line[i-1] == ' ' || line[i-1] == '\t'; i--)
-			;
+	if (c == '\n')
+		line[i++] = c;
+	line[i] = '\0';
 
-		if (c == '\n')
-			line[i++] = c;
-		line[i] = '\0';
-
-		return i;
-	}
-	else if (c == EOF)
-		return EOF;
-	else
-		return 0;
+	return i;
 }
-
