@@ -7,9 +7,6 @@
 */
 
 #define MAXLINE 1000
-#define WRAP_COLUMN 30
-#define TAB_WIDTH 8
-#define ERROR -2
 #define TRUE 1
 #define FALSE 0
 
@@ -20,7 +17,7 @@ int strip_comments(char line[], int len, char multi_line[]);
 
 
 int main() {
-	int len, fold_at, i, add_hyphen, last_i;
+	int len;
 	char line[MAXLINE];
 	char multi_line_comment[1];
 	multi_line_comment[0] = FALSE;
