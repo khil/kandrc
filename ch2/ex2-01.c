@@ -28,13 +28,16 @@ unsigned long power(long base, int exp) {
 		return result;
 }
 
+
 unsigned long signed_upper(unsigned long value) {
 	return (value / 2) - 1;
 }
 
+
 long signed_lower(unsigned long value) {
 	return (value / 2) * -1;
 }
+
 
 void print_int_limits(char type_name[], int bits, long min, unsigned long max, unsigned long umax) {
 	unsigned long ulimit = power(2, bits);
@@ -53,8 +56,6 @@ void print_int_limits(char type_name[], int bits, long min, unsigned long max, u
 	printf("\tlimits.h: 0 -> +%lu\n", umax);
 
 }
-
-
 
 
 int main() {
