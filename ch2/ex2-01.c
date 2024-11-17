@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include <limits.h>
 #include <float.h>
 
@@ -11,23 +12,6 @@
 
 #define FALSE 0
 #define TRUE 1
-#define MAX_INT_WIDTH __LONG_WIDTH__
-
-
-unsigned long power(long base, int exp) {
-	unsigned long result = 1;
-	int i;
-
-	for (i = 0; i < exp; i++)
-		result = (result * base);
-
-	if (result == 0)
-		// longs will overflow and flip the bits to zero, flip them back
-		return result - 1;
-	else
-		return result;
-}
-
 
 unsigned long signed_upper(unsigned long value) {
 	return (value / 2) - 1;
@@ -40,23 +24,26 @@ long signed_lower(unsigned long value) {
 
 
 void print_int_limits(char type_name[], int bits, long min, unsigned long max, unsigned long umax) {
-	unsigned long ulimit = power(2, bits);
+	unsigned long ulimit = pow(2, bits);
+	int overflowed = (ulimit == 0); // longs will overflow and flip the bits to 0 
+
 	printf("(signed) %s [%d bits]:\n", type_name, bits);
-	if (bits < MAX_INT_WIDTH)
-		printf("\tcalc'd  : %+ld -> +%ld\n", signed_lower(ulimit), signed_upper(ulimit));
-	else
+	if (overflowed) {
+		ulimit--; // flip the overflowed back to its upper limit
 		printf("\tcalc'd  : %+ld -> +%ld\n", signed_lower(ulimit) -1, signed_upper(ulimit)+1);
+	}
+	else
+		printf("\tcalc'd  : %+ld -> +%ld\n", signed_lower(ulimit), signed_upper(ulimit));
 
 	printf("\tlimits.h: %+ld -> +%ld\n", min, max);
 	printf("unsigned %s:\n", type_name);
-	if (bits < MAX_INT_WIDTH)
-		printf("\tcalc'd  : 0 -> +%ld\n", ulimit - 1);
-	else
+	if (overflowed)
 		printf("\tcalc'd  : 0 -> +%lu\n", ulimit);
+	else
+		printf("\tcalc'd  : 0 -> +%ld\n", ulimit - 1);
 	printf("\tlimits.h: 0 -> +%lu\n", umax);
 
 }
-
 
 int main() {
 	print_int_limits("char", __SCHAR_WIDTH__, CHAR_MIN, CHAR_MAX, UCHAR_MAX);
