@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <assert.h>
 
 /*
@@ -42,15 +41,16 @@ unsigned set_bits(unsigned x, unsigned p, unsigned n, unsigned y) {
     **        10000000
     **     b. The right mask needs to retain the bit(s) to the right of the index p+1-n. To make
     **        the mask start with (~0) and shifting the bits to the right by p+1-n. i.e.,
-    **        11110000. Then bitwise NOT the result, i.e., 00001111
+    **        11110000. Then bitwise NOT the result, i.e., 00001111.
     **     c. The final step to create the mask is bitwise OR the left and right masks with the
-    **        result being: 10001111 
-    **     d. Bitwise AND x and the final mask created in 3c to get our final result. i.e, 10001011
+    **        result being: 10001111.
+    **     d. Bitwise AND x and the final mask created in 3c to get our final result. i.e,
+    **        10001011.
     **  3. Create a second mask to extract n bits from the right of y.
     **     a. Start with ~0 and shift it right n bits, i.e., 11111000, then bitwise NOT the result
     **        to achieve 00000111.
     **     b. Then bitwise AND the result achieved in 3a with y to give you the bits to be copied
-    **        into x. .e., 00000110
+    **        into x, i.e., 00000110
     **     c. Shift the result achieved in 3b by p+1-n bits to the right to align the mask with
     **        the insertion point in x. i.e., 01100000
     **  4. Bitwise OR the results of 2d and 3c to return our final result, i.e., 11101011 (235)
