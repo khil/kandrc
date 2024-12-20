@@ -105,6 +105,6 @@ int main() {
     /* std test -> x=1111111(1)  y=0000000(0) : 1111111(0) */
     assert((setbits(255, 0, 1, 0) == 254) && (set_bits(255, 0, 1, 0) == 254)); 
 
-	return 0;
+    return 0;
 }
 
