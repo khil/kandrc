@@ -35,7 +35,7 @@ unsigned set_bits(unsigned x, unsigned p, unsigned n, unsigned y) {
     **  1. Validate the ranges of p & n.
     **  2. Create a mask to isolate the bits we want to retain from x. To achieve this create two
     **     temporary masks, one for the left side bits and one for the right. The two temporary
-    **     masks will be combined into a single mask using a bitwise AND operation.
+    **     masks will be combined into a single mask using a bitwise OR operation.
     **     a. The left mask should retain the bit(s) on left side of p+1. To make the mask start
     **        with a NOT 0 (~0), then shifting the bits left p+1 positions; the result should be:
     **        10000000
