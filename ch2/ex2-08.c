@@ -10,45 +10,31 @@ typedef unsigned char ubyte;
 
 ubyte rightrot(ubyte x, ubyte n) {
     /*
-    **  This is a rewrite of the one-liner above with parameter checking and a description of
-    **  what's going on.
-    **  
+    **  Note: the size of the parameters (in bytes) impacts the result. For simplicity
+    **         one byte is use.
+    **
     **  Parameters:
-    **      x - Value for which the bits are to be replaced and returned.
-    **      p - Position of the starting bit (rightmost bit = 0). Valid values include, 0 to
-    **          sizeof(ubyte) * 8 - 1.
-    **      n - For x, the number of bits to the right of p to replace. For y, the number of bits,
-    **          from the rightmost bit to copy into x. Valid values 0 to p + 1. Note: if n = Zero
-    **          there's nothing to do.
+    **      x - Value for which the bits are to be rotated to the right.
+    **      n - For x, the number of bits to the right to rotate the bits.
     **
     **  Assuming (using 8 bits for simplicity):
     **      x = 10011011 (155)
-    **      p = 6
     **      n = 3
     **
-    **  1. Validate the ranges of p & n.
-    **  2. Create a mask to isolate the bits we want to retain from x. To achieve this create two
-    **     temporary masks, one for the left side bits and one for the right. The two temporary
-    **     masks will be combined into a single mask using a bitwise OR operation.
-    **     a. The left mask should retain the bit(s) on left side of p+1. To make the mask start
-    **        with a NOT 0 (~0), then shifting the bits left p+1 positions; the result should be:
-    **        10000000
-    **     b. The right mask needs to retain the bit(s) to the right of the index p+1-n. To make
-    **        the mask start with (~0) and shifting the bits to the right by p+1-n. i.e.,
-    **        11110000. Then bitwise NOT the result, i.e., 00001111.
-    **     c. The next step is to create the mask is bitwise ORing the left and right masks, the
-    **        result being: 10001111.
-    **     d. The final step is to bitwise NOT(~) the mask created in 3c to make the mask 01110000.
-    **  3. Bitwise XOR x and the mask created in step 3 returning the result, i.e., 11101011.
+    **  1. Validate n is > 0 and < 8.
+    **  2. Create a mask to extract n bits from the right of x (mask=00000111); Then extract the
+    **     bits using a bitwise AND between x and the mask resulting in: 00000011.
+    **  3. Shift r to the left by sizeof(ubyte) * 8 - n bits, 01100000
+    **  4. Shift x by n bits to the right, 00010011
+    **  5. Return the bitwise OR of X and result or step 3.
     */
-    if (n == 0) /* 1: early exit - nothing to do */
+    if (n > 0 && n < sizeof(ubyte) * 8) {
+        ubyte res = x & ~(~0 << n);
+        res <<= (sizeof(ubyte) * 8) - n;
+        x >>= n;
+        return x | res;
+    } else 
         return x;
-
-    ubyte mask = ~(~0 << n);
-    ubyte res = x & mask;
-    x >>= n;
-    res <<= (sizeof(ubyte) * 8) - n;
-    return x | res;
 }
 
 
@@ -56,6 +42,9 @@ int main() {
 
     /* n=0 (nothing to do) -> x=10011011 : 11101011 */
     assert(rightrot(155, 0) == 155);
+
+    /* n=9 (n too big) -> x=10011011 : 11101011 */
+    assert(rightrot(155, 9) == 155);
 
     /* std -> x=10011(011) : (011)10011*/
     assert(rightrot(155, 3) == 115);
