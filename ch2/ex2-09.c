@@ -9,12 +9,19 @@
 
 
 int bit_count(unsigned x) {
+    /*
+     * Bit counting via "x &= (x-1)" works because the bitwise & operation
+     * between 0 and 1 always produces 0, so by decrementing x by 1 and bitwise
+     * &= it with original x value, the rightmost 1-bit is set to zero on each
+     * iteration of the loop. With this method the loop only needs to iterate
+     * through the 1-bits in x, eliminating the need to iterate though all
+     * bits and checking if they are a 1-bit and incrementing the counter,
+     * making it more efficient in all cases, including when all the bits in
+     * x are 1, due to the elimination of the 1-bit check in the given example.
+     */
     int b;
 
-    for (b = 0; x != 0; x &= (x-1)) {
-        printf("x=%u\n", x);
-        b++;
-    }
+    for (b = 0; x != 0; x &= (x-1), b++);
 
     return b;
 }
