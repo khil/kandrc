@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <limits.h>
 
 /*
 ** Exercise 2-8. Write a function rightrot(x,n) that returns the value of the
@@ -28,9 +29,9 @@ ubyte rightrot(ubyte x, ubyte n) {
     **  4. Shift x by n bits to the right, 00010011
     **  5. Return the bitwise OR of X and result or step 3.
     */
-    if (n > 0 && n < sizeof(ubyte) * 8) {
+    if (n > 0 && n < sizeof(ubyte) * CHAR_BIT) {
         ubyte res = x & ~(~0 << n);
-        res <<= (sizeof(ubyte) * 8) - n;
+        res <<= (sizeof(ubyte) * CHAR_BIT) - n;
         x >>= n;
         return x | res;
     } else 
