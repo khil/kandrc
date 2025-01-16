@@ -1,19 +1,9 @@
 #include <assert.h>
-#include <stdio.h>
 
 /* 
  * Exercise 4-1.  Write a function strrindex(s,t) which returns  the position
  * of the rightmost occurrence of t in s, or -1 if there is none.
  */
-
-int str_len(const char s[]) {
-    /* A quick & dirty implementation of strlen (string length).
-     * The number of characters copied is returned
-     */
-    int len;
-    for(len=0; s[len] != 0; ++len);
-    return len;
-}
 
 int strrindex(char s[], const char t[]) {
     int i, j, idx = -1;
