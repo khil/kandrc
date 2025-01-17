@@ -14,7 +14,8 @@ void push(double f);
 double pop();
 int get_op(char []);
 
-/* reverse polish calculator */
+
+/* reverse Polish calculator */
 int main() {
     int type;
     double op2;
@@ -91,6 +92,7 @@ double pop() {
 int get_ch();
 void unget_ch(int);
 
+/* issign: return one when the argument is +/- otherwise zero */ 
 int issign(char c) {
     if (c == '-' || c == '+')
         return 1;
@@ -104,9 +106,8 @@ int get_op(char s[]) {
     while ((s[0] = c = get_ch()) == ' ' || c == '\t')
         ;
     s[1] = '\0';
-    if (!isdigit(c) && !issign(c) && c != '.') {
+    if (!isdigit(c) && !issign(c) && c != '.')
         return c;   /* not a number */
-    }
     i = 0;
     if (issign(c)) /* collect the sign */
         while (issign(s[++i] = c = get_ch()))
