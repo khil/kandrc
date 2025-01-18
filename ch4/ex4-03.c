@@ -21,6 +21,7 @@ int main() {
     double op2;
     char s[MAX_OP];
 
+    printf("> ");
     while ((type = get_op(s)) != EOF) {
         switch(type) {
             case NUMBER:
@@ -41,23 +42,25 @@ int main() {
                 if (op2 != 0.0)
                     push(pop() / op2);
                 else
-                    puts("error: zero divisor\n");
+                    puts("error: zero divisor");
                 break;
             case '%':
                 op2 = pop();
                 if (op2 != 0.0)
                     push((int) pop() % (int) op2);
                 else
-                    puts("error: zero divisor\n");
+                    puts("error: zero divisor");
                 break;
             case '\n':
-                printf("\t%.8g\n", pop());
+                printf(">>> %.8g\n> ", pop());
                 break;
             default:
                 printf("error: unknown command (%s)\n", s);
                 break;
         }
     }
+    puts("\b\babort");
+    
     return 0;
 }
 
@@ -92,26 +95,35 @@ double pop() {
 int get_ch();
 void unget_ch(int);
 
-/* issign: return one when the argument is +/- otherwise zero */ 
-int issign(char c) {
-    if (c == '-' || c == '+')
-        return 1;
-    return 0;
+int is_sign(char c) {
+    return (c == '+' || c == '-');
 }
 
 /* get_op: get next operator or numeric operand */
 int get_op(char s[]) {
     int i, c;
 
+    /* ignore white space */
     while ((s[0] = c = get_ch()) == ' ' || c == '\t')
         ;
     s[1] = '\0';
-    if (!isdigit(c) && !issign(c) && c != '.')
+
+    if (!isdigit(c) && c != '.' && !is_sign(c))
         return c;   /* not a number */
+
     i = 0;
-    if (issign(c)) /* collect the sign */
-        while (issign(s[++i] = c = get_ch()))
-            ;
+    /* handle sign ops and signed numbers */
+    if (is_sign(c)) {
+        int sign = c;
+        s[++i] = c = get_ch();
+        /* the sign was not followed by a number, so it's an op */
+        if (!isdigit(c)) {
+            unget_ch(c);
+            s[i] = '\0';
+            return sign;
+        }
+    }
+
     if (isdigit(c)) /* collect integer part */
         while (isdigit(s[++i] = c = get_ch()))
             ;
@@ -143,6 +155,6 @@ void unget_ch(int c) {
     if (buf_p > BUF_SIZE)
         puts("unget_ch: too many characters\n");
     else
-        buf[buf_p] = c;
+        buf[buf_p++] = c;
 }
 
