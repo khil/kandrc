@@ -366,11 +366,8 @@ int buf_p = 0;     /* next free position in buf */
 void dump_buf() {
     printf("dumping 'buf' ->\n\t\"");
     for (int i = buf_p-1; i >= 0; i--)
-        if (buf[i] >= 0)
-            printf("0x%02x ", buf[i]);
-        else
-            printf("-0x%02x ", abs(buf[i]));
-    puts("\b\"");
+        printf("%c0x%02x ", (buf[i] < 0 ? '-' : '\0'), abs(buf[i]));
+    printf("\b\"\n");
 }
 
 /* get a (possibly pushed back) character */
