@@ -1,6 +1,8 @@
 #include <assert.h>
 #include <string.h>
 
+#define reverse(s) (_reverse(s, 0));
+
 /* 
  * Exercise 4-13.  Write a recursive version of the furnction reverse(s), which
  * reverses the string in place.
@@ -15,11 +17,6 @@ void _reverse(char s[], int i) {
         _reverse(s, ++i);
     }
 }
-
-void reverse(char s[]) {
-    _reverse(s, 0);
-}
-
 
 int main() {
     char s[100] = "olleh";
