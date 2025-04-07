@@ -9,8 +9,8 @@ char buf[BUF_SIZE]; /* buffer for ungetch */
 int buf_p = 0;      /* next free position in buf */
 
 /*
- * Exercise 5-1. As written, getint treats a + or - not followed by a didit as a 
- * valid representation of zero. Fix is to push a character back on the input.
+ * Exercise 5-2. Write getfloat, the floating-point analog of getint. What
+ * type does getfloat return as ins function value?
  */
 
 /* get a (possibly pushed back) character */
