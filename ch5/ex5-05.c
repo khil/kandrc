@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <stdio.h>
 #include <string.h>
 
 /*
@@ -10,11 +9,11 @@
  */
 
 char *_strncpy(char *dst, char *src, size_t n) {
-    char * res = dst;
-    for (int i = 0; *src; i++, src++, dst++)
+    char *res = dst;
+    for (int i = 0; i < n && *src; i++, src++, dst++)
         *dst = *src;
     *dst = 0;
-    return dst;
+    return res;
 }
 
 char *_strncat(char *dst, char *src, size_t n) {
@@ -37,29 +36,30 @@ int _strncmp(char *s, char *t, size_t n) {
         s--;
         t--;
     }
-    if (*s == *t)
-        return 0;
-    else
-        return (*s - *t);
+    return (*s == *t) ? 0 : (*s - *t);
 }
 
 
 int main() {
 
-    char s[100] = "Hello, world!";
-    printf("%d\n", _strncmp("", "", 1));
-    printf("%d\n", _strncmp("abcd", "abce", 3));
-    printf("%d\n", _strncmp("aa", "bb", 1));
-    printf("%d\n", _strncmp("bb", "aa", 1));
+    assert(_strncmp("", "", 1) == 0);
+    assert(_strncmp("abcd", "abce", 3) == 0);
+    assert(_strncmp("aa", "bb", 1) < 0);
+    assert(_strncmp("hello", "help", 4) < 0);
+    assert(_strncmp("help", "hello", 4) > 0);
+    assert(_strncmp("bb", "aa", 1) > 0);
 
-    _strncat(s, "; goodbye", 6);
-    printf("s=%s\n", s);
-    s[0] = 0;
-    
-    printf("s=%s\n", _strncat(s, "testicular cancer sucks!", 4));
+    char s[100], t[100];
+    char *hello = "Hello, world!";
+    assert(strcmp(_strncpy(s, hello, 99), hello) == 0);
+    assert(strcmp(_strncat(s, "; goodbye", 6), "Hello, world!; good") == 0);
 
     s[0] = 0;
-    printf("s=%s\n", _strncat(s, "this is a test!", 9));
+    char *temp = "testicular cancer sucks!";
+    assert(strcmp(_strncat(s, temp, 4), "test") == 0);
+    assert(strcmp(_strncat(s, "; this is a test!", 11), "test; this is a") == 0);
+
+    assert(strcmp(_strncpy(t, s, 5), "test;") == 0);
 
     return 0;
 }
