@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <limits.h>
 
 /*
 ** Exercise 2-5.  Write an function any(s1, s2), which returns the first location
@@ -18,24 +19,29 @@ int main() {
 	int len;
 
 	while ((len = _getline(line, MAXLEN)) > 1) {
-		int res = any(line, "qvx");
-		printf("location of q, v, or x: %d\n", res);
+		int res = any(line, "aeiou");
+		printf("location of a, e, i, o, or u: %d\n", res);
 	}
 	return 0;
 }
 
 
 int any(const char s1[], const char s2[]) {
-	int i, j;
+	int i, j, k;
+    k = INT_MAX;
 
 	for(i = 0; s2[i]; i++) {
 		for (j = 0; s1[j]; j++) {
 			if (s1[j] == s2[i])
-				return j;
+                if (j < k)
+                    k = j;
 		}
 	}
 
-	return -1;
+    if (k == INT_MAX)
+        return -1;
+    else
+        return k;
 }
 
 
