@@ -21,6 +21,18 @@ size_t _strlen(char *s) {
 }
 
 
+int32_t _strcmp(const char *s, const char *t) {
+    /* A quick & dirty implementation of strcmp (string compare) :
+     * returns 0 when s & t are identical otherwise 1.
+     */
+    for (; *s == *t; s++, t++)
+        if (*s == 0)
+            return 0;
+
+    return *s - *t;
+}
+
+
 char *reverse(char *s) {
     if (s) {
         char *str = s;
