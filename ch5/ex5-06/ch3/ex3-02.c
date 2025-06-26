@@ -15,7 +15,7 @@
 #define BUF_SIZE 5000
 
 
-char *escape_p(char *s, const char *t) {
+char *escape(char *s, const char *t) {
     char *q = s;
 
     for (char *p = (char *) t; *p; p++, q++) {
@@ -39,7 +39,7 @@ char *escape_p(char *s, const char *t) {
 }
 
 
-char *unescape_p(char *s, const char *t) {
+char *unescape(char *s, const char *t) {
     char *q = s;
 
     for (char *p = (char *) t; *p; p++, q++) {
@@ -75,8 +75,8 @@ int32_t main() {
     char unescaped_s[BUF_SIZE];
     const char *escaped_check_str = "\\This is a test:\\n\\tTest...\\n\\tTest...\\n\\tTesticles!\\n";
 
-    escape_p(escaped_s, original_t);
-    unescape_p(unescaped_s, escaped_s);
+    escape(escaped_s, original_t);
+    unescape(unescaped_s, escaped_s);
 
     assert(_strcmp(escaped_s, escaped_check_str) == 0);
     assert(_strcmp(original_t, unescaped_s) == 0);
