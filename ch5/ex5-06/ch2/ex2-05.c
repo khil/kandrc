@@ -1,6 +1,7 @@
+#include <assert.h>
 #include <stdio.h>
-#include "../str.h"
 #include <string.h>
+#include "../str.h"
 
 /*
  * Exercise 5-6. Rewrite the appropriate programs from earlier chapters and exercises
@@ -17,27 +18,21 @@
 
 #define MAXLEN 1000
 
-const char *any(const char *s1, const char *s2) {
-    const char *s;
-    char *i = NULL;
 
-    for (const char *t = s2; *t; t++) {
-        for (s = s1; *s; s++) {
-            if (*s == *t) {
-                printf("t = %c = %ld\n", *t, t - s1);
-                if (i != NULL) {
-                    printf("i = %i = %ld\n", *i, i - s1);
-                    i = (char *) t;
-                }
-
+char *any(const char *s1, const char *s2) {
+    char *r = NULL;
+    char *p;
+ 
+    for (char *q = (char *) s2; *q; q++) {
+        for (p = (char *) s1; *p; p++) {
+            if (*q == *p) {
+                if (!r || p - s1 < r - s1)
+                    r = p;
             }
-
-                //if (i == NULL || (s1 - t) < (s1 - i))
-                //    i = (char *) t;
         }
     }
-
-    return i;
+ 
+    return r;
 }
 
 
@@ -46,10 +41,11 @@ int main() {
 	int32_t len;
 
 	while ((len = _getline(line, MAXLEN)) > 1) {
-		const char *res = any(line, "aeiou");
-		printf("location of a, e, i, o, or u: %ld\n", res - line);
-        char *r = strpbrk(line, "aeiou");
-		printf("location of a, e, i, o, or u: %ld\n", r - line);
+		char *p = any(line, "aeiou");
+        char *q = strpbrk(line, "aeiou");
+
+        assert(*p == *q);
+        assert(p - line == q - line);
 	}
 	return 0;
 }
