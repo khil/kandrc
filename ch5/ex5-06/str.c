@@ -11,13 +11,19 @@
  * exercises.
  */
 
-size_t _strlen(char *s) {
-    size_t i = 0;
+size_t _strlen(const char *s) {
+    //size_t i = 0;
+    char *p = (char *) s;
     
-    for (; *s; s++, i++)
+    for (; *p; p++)
         ;
+    
+    //for (; *s; s++, i++)
+    //    ;
 
-    return i;
+    //return i;
+
+    return p - s;
 }
 
 
