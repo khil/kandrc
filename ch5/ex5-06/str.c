@@ -33,6 +33,20 @@ int32_t _strcmp(const char *s, const char *t) {
 }
 
 
+char *_strcpy(char *s, const char *t) {
+    /* A quick & dirty implementation of strcpy (string copy).
+     * The number of characters copied is returned
+     */
+
+    char *d = s;
+
+    for(char *p = (char *) t; *p; p++, d++)
+        *d = *p;
+
+    return d;
+}
+
+
 char *reverse(char *s) {
     if (s) {
         char *str = s;

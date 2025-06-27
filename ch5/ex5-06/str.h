@@ -8,5 +8,6 @@ int32_t _putline(char *line);
 size_t _strlen(char *s);
 int32_t _strcmp(const char *s, const char *t);
 char *reverse(char *s);
+char *_strcpy(char *s, const char *t);
 #endif
 
