@@ -12,16 +12,11 @@
  */
 
 size_t _strlen(const char *s) {
-    //size_t i = 0;
     char *p = (char *) s;
     
     for (; *p; p++)
         ;
     
-    //for (; *s; s++, i++)
-    //    ;
-
-    //return i;
 
     return p - s;
 }
@@ -43,7 +38,6 @@ char *_strcpy(char *s, const char *t) {
     /* A quick & dirty implementation of strcpy (string copy).
      * The number of characters copied is returned
      */
-
     char *d = s;
 
     for(char *p = (char *) t; *p; p++, d++)
